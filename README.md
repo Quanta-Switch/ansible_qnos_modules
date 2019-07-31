@@ -35,8 +35,6 @@ The following is an example task which uses `cli_config` module:
     diff_match: none
 ```
 
-
-
 ## Extended QNOS modules
 QNOS Ansible modules provide additional functionality to help managing/configuring QUANTA Switches.
 
@@ -66,7 +64,7 @@ action_plugins
 terminal_plugins
 ```
 
-### Add qnos to the variable `network_group_modules`
+### Add `qnos` to the variable `network_group_modules`
 An example of `network_group_modules`:
 ```diff
 - network_group_modules = eos, nxos, ios, iosxr, junos, vyos
