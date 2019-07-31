@@ -1,16 +1,16 @@
-#Install experimental Qnos Modules
+# Install experimental Qnos Modules
 If the qnos modules have not been upstreamed to Ansible, you can install these qnos modules to configure QUANTA Switches locally.
 
 The safest way to install experimental modules on your system is via a relative location.
 
-##Install in a relative location (recommended)
+## Install in a relative location (recommended)
 Ansible allows you to put modules in a location that is relative to the project you are working on. To accomplish this, follow the instructions below.
 
 ansible.cfg creation/configuration¶
 First, ensure that an ansible.cfg file exists in the directory that you run Ansible from.
 
 Inside the ansible.cfg file, add the following code.
-'
+```
 defaults
 library = ./library/modules
 module_utils = ./library/module_utils
@@ -18,7 +18,7 @@ action_plugins = ./library/plugins/action
 terminal_plugins = ./library/plugins/terminal
 network_group_modules = bigip, bigiq
 This code instructs Ansible to look for modules in a directory called library/modules/ that is relative to where the ansible.cfg file exists. Additionally, it instructs Ansible to look for supporting “module utils” in the library/module_utils/ directory. The same redirection is done with Ansible’s action plugins via the action_plugins configuration parameter. Finally, we tell Ansible that there the bigip and bigiq modules are considered “networking” modules. This changes the behavior of Ansible slightly when it invokes action plugins.
-'
+```
 Note
 
 Specifying a library directory does not override the system location where Ansible searches for modules. It only tells Ansible to “look here first” when importing a module. Therefore, if a module in the specified library directory does not exist, Ansible will fall back to the system location and look for the module there.
