@@ -68,12 +68,12 @@ terminal_plugins
 
 ### Add qnos to the variable `network_group_modules`
 An example of `network_group_modules`:
+```diff
+- network_group_modules = eos, nxos, ios, iosxr, junos, vyos
++ network_group_modules = eos, nxos, ios, iosxr, junos, vyos, qnos
 ```
-network_group_modules = eos, nxos, ios, iosxr, junos, vyos, qnos
-```
-```html
-<font color="red">This is some text!</font>
-```
+
+
 ### Get the source
 Next, you must get the contents of the qnos_ansible_modules. This can be done in either of two ways.
 
