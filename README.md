@@ -1,12 +1,12 @@
 # Experimental QNOS Ansible Modules
-This document describes how to download/use QNOS Ansible modules before these modules are upstreamed to Ansible.
-In other words, after QNOS Ansible modules are upstreamed to Ansible, QNOS modules will be installed at the same time when you install Ansible, since they are part of Ansible’s release.
+This repository keeps the QNOS Ansible modules.
+After QNOS Ansible modules are upstreamed to Ansible, QNOS modules will be installed at the same time when you install Ansible, since they are part of Ansible’s release.
 Because some QNOS modules are under development, you still can use this way to update the QNOS Ansible modules.
 
 #	The purpose of QNOS modules
 Ansible is a popular tool to help you automate I.T. process e.g. provision IT resources, deploy application and network configurations.
 
-## QNOS network_cli platform
+## QNOS `network_cli` platform
 The `qnos` `cliconf` plugin provides the capabilities to use Ansible vendor agnostic modules (`cli_command` and `cli_config`) to automate against QUANTA Switches. Please refer to [Advanced Topics with Ansible for Network Automation](https://docs.ansible.com/ansible/latest/network/user_guide/index.html) for more detailed information.
 
 Remember set `ansible_network_os` and `ansible_connection` correctly, i.e.:
@@ -24,7 +24,7 @@ The following is an example task which uses `cli_command` module:
   register: result
 ```
 
-The following is an example task which uses cli_config module:
+The following is an example task which uses `cli_config` module:
 ```
 - name: setup
   cli_config:
@@ -57,8 +57,8 @@ Ansible allows you to put modules in a location that is relative to the project 
 ### Correctly setup the path for custom modules and plugins
 Please refer to [Adding modules and plugins locally](https://docs.ansible.com/ansible/latest/dev_guide/developing_locally.html) to correctly setup the path for QNOS modules and plugins.
 
-You need store the downloaded files to the corresponding directories, for example, to use a local module only in certain playbooks: you can copy the files in library to a sub-directory called library in the directory that contains the playbook(s).
-You can still set the following variables to instruct Ansible to look for additionally directories to look for modules, module utils, plugins.
+You need store the downloaded files to the corresponding directories, for example, to use a local module only in certain playbooks: you can copy the files in `library` to a sub-directory called `library` in the directory that contains the playbook(s).
+You can still set the following variables to instruct Ansible to look for additionally directories to look for modules, module utils, and different kinds of plugins.
 ```
 library
 module_utils
@@ -66,8 +66,8 @@ action_plugins
 terminal_plugins
 ```
 
-### Add qnos to the variable network_group_modules
-An example of network_group_modules:
+### Add qnos to the variable `network_group_modules`
+An example of `network_group_modules`:
 ```
 network_group_modules = eos, nxos, ios, iosxr, junos, vyos, qnos
 ```
