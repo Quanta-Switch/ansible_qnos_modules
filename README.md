@@ -1,75 +1,86 @@
-# Install experimental Qnos Modules
-If the qnos modules have not been upstreamed to Ansible, you can install these qnos modules to configure QUANTA Switches locally.
+# Experimental QNOS Ansible Modules
+This document describes how to download/use QNOS Ansible modules before these modules are upstreamed to Ansible.
+In other words, after QNOS Ansible modules are upstreamed to Ansible, QNOS modules will be installed at the same time when you install Ansible, since they are part of Ansible’s release.
+Because some QNOS modules are under development, you still can use this way to update the QNOS Ansible modules.
 
-The safest way to install experimental modules on your system is via a relative location.
+#	The purpose of QNOS modules
+Ansible is a popular tool to help you automate I.T. process e.g. provision IT resources, deploy application and network configurations.
 
-## Install in a relative location (recommended)
+## QNOS network_cli platform
+The `qnos` `cliconf` plugin provides the capabilities to use Ansible vendor agnostic modules (`cli_command` and `cli_config`) to automate against QUANTA Switches. Please refer to [Advanced Topics with Ansible for Network Automation](https://docs.ansible.com/ansible/latest/network/user_guide/index.html) for more detailed information.
+
+Remember set `ansible_network_os` and `ansible_connection correctly`, i.e.:
+
+```
+ansible_network_os=qnos
+ansible_connection=network_cli
+```
+
+The following is an example task which uses `cli_command` module:
+```
+- name: get output for single command
+  cli_command:
+    command: show version
+  register: result
+```
+
+The following is an example task which uses cli_config module:
+```
+- name: setup
+  cli_config:
+    config: |
+      interface loopback 0
+      no description
+      shutdown
+    diff_match: none
+```
+
+
+
+## Extended QNOS modules
+QNOS Ansible modules provide additional functionality to help managing/configuring QUANTA Switches.
+
+The following is an example task which uses `qnos_system` module to add `ansible.com` and `redhat.com` to the `ip domain-list`.
+```
+- name: configure domain_search
+  qnos_system:
+    domain_search:
+      - ansible.com
+      - redhat.com
+  register: result
+```
+
+# How to add QNOS Ansible modules locally
+## Install in a relative location
 Ansible allows you to put modules in a location that is relative to the project you are working on. To accomplish this, follow the instructions below.
+### Correctly setup the path for custom modules and plugins{#anchor_custom_module}
+Please refer to [Adding modules and plugins locally](https://docs.ansible.com/ansible/latest/dev_guide/developing_locally.html) to correctly setup the path for QNOS modules and plugins.
 
-1. Prepare`ansible.cfg`
-
-First, ensure that an `ansible.cfg` file exists in the directory that you run Ansible from.
-
-Inside the `ansible.cfg` file, add the following code.
+You need store the downloaded files to the corresponding directories, for example, to use a local module only in certain playbooks: you can copy the files in library to a sub-directory called library in the directory that contains the playbook(s).
+You can still set the following variables to instruct Ansible to look for additionally directories to look for modules, module utils, plugins.
 ```
-defaults
-library = ./library/modules
-module_utils = ./library/module_utils
-action_plugins = ./library/plugins/action
-terminal_plugins = ./library/plugins/terminal
-network_group_modules = bigip, bigiq
-This code instructs Ansible to look for modules in a directory called library/modules/ that is relative to where the ansible.cfg file exists. Additionally, it instructs Ansible to look for supporting “module utils” in the library/module_utils/ directory. The same redirection is done with Ansible’s action plugins via the action_plugins configuration parameter. Finally, we tell Ansible that there the bigip and bigiq modules are considered “networking” modules. This changes the behavior of Ansible slightly when it invokes action plugins.
-```
-*Note*
-
-Specifying a library directory does not override the system location where Ansible searches for modules. It only tells Ansible to “look here first” when importing a module. Therefore, if a module in the specified library directory does not exist, Ansible will fall back to the system location and look for the module there.
-
-You can also specify multiple locations by separating them with a colon. For example, if you have two different directories with two different sets of modules in them, you might do something like this:
-```
-[defaults]
-library=./library:./unstable
+library
+module_utils
+action_plugins
+terminal_plugins
 ```
 
-In this example, when looking for a module named foo.py, Ansible follows this order:
-
+### Add qnos to the variable network_group_modules
+An example of network_group_modules:
 ```
-./library/foo.py
-./unstable/foo.py
+network_group_modules = eos, nxos, ios, iosxr, junos, vyos, qnos
 ```
 
-Recursively through ```/usr/local/lib/PYTHON_VERSION/site-packages/ansible/modules/```
+### Get the source
+Next, you must get the contents of the qnos_ansible_modules. This can be done in either of two ways.
+**Via a git clone (recommended)**
+In addition to get the source code of QNOS Ansible modules, you can easily update the source code by issuing the following command:
+```
+git clone https://github.com/chiuhsiapeng/ansible_qnos_modules
+```
+**Via downloading a zip file**
+Another method is to download a ZIP file of the contents of the respository. To use this method, you should navigate to the Code tab, as shown below in the corresponding Github repository. Once on this page, click the green Clone or download button. Download this zip file and extract it.
+![download zip](images/download_zip.png)
 
-1. Get the source
-Next, you must get the contents of the f5-ansible Github repository. This can be done in either of two ways.
-
-In the same directory that you have created the ansible.cfg file, choose one of the following methods.
-
-![alt text](images/git_clone.png)
-Via a git clone (recommended)
-This method will allow you to both
-
-* Get the source code
-
-Update the source code easily
-Therefore, it is the recommended approach to getting the f5-ansible development source.
-
-* Issue the following command
-
-git clone -b devel https://github.com/F5Networks/f5-ansible.git
-This will clone the entire source of the f5-ansible repository to a local directory named f5-ansible.
-
-* Via downloading a zip file
-Another easy method is to download a ZIP file of the contents of the respository. Note however that with this method, you may not be able to as easily do an in-place upgrade of the code (as you can do with the git method above.
-
-To use this method, you should navigate to the Code tab, as shown below in the F5Networks/f5-ansible Github repository.
-
-../_images/code-tab.png
-Once on this page, click the green Clone or download button. This will present you with the option of downloading the f5-ansible source code.
-
-../_images/download-zip.png
-Download this zip file and extract it.
-
-Moving the downloaded code
-Regardless of the method above which you chose, you should be able to find a directory named library within either of the downloaded sources.
-
-Move this library directory to the location you specified in the ansible.cfg above. In the example above, this would be the same directory that the ansible.cfg is in.
+### Moving the downloaded code
+As it is mentioned in the previous section [Correctly setup the path for custom modules and plugins](#anchor_custom_module), please move the downloaded code to the corresponding directories.
