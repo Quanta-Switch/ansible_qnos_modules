@@ -54,7 +54,7 @@ The following is an example task which uses `qnos_system` module to add `ansible
 ## Install in a relative location
 Ansible allows you to put modules in a location that is relative to the project you are working on. To accomplish this, follow the instructions below.
 
-### Correctly setup the path for custom modules and plugins{#anchor_custom_module}
+### Correctly setup the path for custom modules and plugins
 Please refer to [Adding modules and plugins locally](https://docs.ansible.com/ansible/latest/dev_guide/developing_locally.html) to correctly setup the path for QNOS modules and plugins.
 
 You need store the downloaded files to the corresponding directories, for example, to use a local module only in certain playbooks: you can copy the files in library to a sub-directory called library in the directory that contains the playbook(s).
