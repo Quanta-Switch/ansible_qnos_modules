@@ -85,4 +85,4 @@ Another method is to download a ZIP file of the contents of the respository. To 
 ![download zip](images/download_zip.png)
 
 ### Moving the downloaded code
-As it is mentioned in the previous section [Correctly setup the path for custom modules and plugins](#Correctly_setup_the_path_for_custom_modules_and_plugins), please move the downloaded code to the corresponding directories.
+As it is mentioned in the previous section [Correctly setup the path for custom modules and plugins](#Correctly-setup-the-path-for-custom-modules-and-plugins), please move the downloaded code to the corresponding directories.
