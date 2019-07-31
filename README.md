@@ -78,11 +78,13 @@ An example of `network_group_modules`:
 Next, you must get the contents of the qnos_ansible_modules. This can be done in either of two ways.
 
 **Via a git clone (recommended)**
+
 In addition to get the source code of QNOS Ansible modules, you can easily update the source code by issuing the following command:
 ```
 git clone https://github.com/chiuhsiapeng/ansible_qnos_modules
 ```
 **Via downloading a zip file**
+
 Another method is to download a ZIP file of the contents of the respository. To use this method, you should navigate to the Code tab, as shown below in the corresponding Github repository. Once on this page, click the green __Clone or download__ button. Download this zip file and extract it.
 ![download zip](images/download_zip.png)
 
