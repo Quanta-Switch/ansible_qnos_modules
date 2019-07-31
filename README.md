@@ -9,7 +9,7 @@ Ansible is a popular tool to help you automate I.T. process e.g. provision IT re
 ## QNOS network_cli platform
 The `qnos` `cliconf` plugin provides the capabilities to use Ansible vendor agnostic modules (`cli_command` and `cli_config`) to automate against QUANTA Switches. Please refer to [Advanced Topics with Ansible for Network Automation](https://docs.ansible.com/ansible/latest/network/user_guide/index.html) for more detailed information.
 
-Remember set `ansible_network_os` and `ansible_connection correctly`, i.e.:
+Remember set `ansible_network_os` and `ansible_connection` correctly, i.e.:
 
 ```
 ansible_network_os=qnos
@@ -53,6 +53,7 @@ The following is an example task which uses `qnos_system` module to add `ansible
 # How to add QNOS Ansible modules locally
 ## Install in a relative location
 Ansible allows you to put modules in a location that is relative to the project you are working on. To accomplish this, follow the instructions below.
+
 ### Correctly setup the path for custom modules and plugins{#anchor_custom_module}
 Please refer to [Adding modules and plugins locally](https://docs.ansible.com/ansible/latest/dev_guide/developing_locally.html) to correctly setup the path for QNOS modules and plugins.
 
@@ -73,6 +74,7 @@ network_group_modules = eos, nxos, ios, iosxr, junos, vyos, qnos
 
 ### Get the source
 Next, you must get the contents of the qnos_ansible_modules. This can be done in either of two ways.
+
 **Via a git clone (recommended)**
 In addition to get the source code of QNOS Ansible modules, you can easily update the source code by issuing the following command:
 ```
@@ -83,4 +85,4 @@ Another method is to download a ZIP file of the contents of the respository. To 
 ![download zip](images/download_zip.png)
 
 ### Moving the downloaded code
-As it is mentioned in the previous section [Correctly setup the path for custom modules and plugins](#anchor_custom_module), please move the downloaded code to the corresponding directories.
+As it is mentioned in the previous section [Correctly setup the path for custom modules and plugins](#Correctly_setup_the_path_for_custom_modules_and_plugins), please move the downloaded code to the corresponding directories.
