@@ -1,0 +1,17 @@
+---
+- name: debug file location
+  debug: msg="i am roles/cli/tests/vlan.yml"
+
+
+- name: show vlan
+  cli_command:
+    command: show vlan
+  register: command_output
+
+#- name: display output
+#  debug:
+#    msg: "{{ role_path }}"
+
+- name: display output
+  debug:
+    var:  command_output.stdout | parse_cli("{{ role_path }}/parsers/qnos_show_vlan_parser.yml")

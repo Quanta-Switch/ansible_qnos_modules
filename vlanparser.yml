@@ -1,0 +1,6 @@
+---
+- name: CLI parser
+  hosts: qnos
+  gather_facts: no
+  roles:
+    - cli

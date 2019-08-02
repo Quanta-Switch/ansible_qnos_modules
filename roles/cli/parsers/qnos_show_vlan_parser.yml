@@ -1,0 +1,17 @@
+---
+vars:
+  vlan:
+    vlan_id: "{{ item.vlan_id }}"
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    interfaces: "{{ item.interfaces | replace('\n', '') | replace(' ', '') }}"
+
+
+keys:
+  vlans:
+    value: "{{ vlan }}"
+    #items: "^(?P<vlan_id>\\d+)\\s+(?P<name>\\S+)\\s+(?P<state>[A-Za-z]{4,})\\s*(?P<interfaces>([A-Za-z0-9]+).+)?"
+    #items: "^(?P<vlan_id>\\d+)\\s+(?P<name>\\S+)\\s+(?P<state>[A-Za-z]{4,})\\s*(?P<interfaces>([0-9]/[0-9]+|[a-z]+[0-9]+).+)?"
+    #items: "^(?P<vlan_id>\\d+)\\s+(?P<name>\\S+)\\s+(?P<state>[A-Za-z]{4,})\\s*(?P<interfaces>([0-9]/[0-9]+|[a-z]+[0-9]+)(,|\\s*))?"
+    #items: "^(?P<vlan_id>\\d+)\\s+(?P<name>\\S+)\\s+(?P<state>[A-Za-z]{4,})\\s*(?P<interfaces>([0-9]/[0-9]+|[a-z]+[0-9]+)(,\\s*([0-9]/[0-9]+|[a-z]+[0-9]+))*)"
+    items: "^(?P<vlan_id>\\d+)\\s+(?P<name>\\S+)\\s+(?P<state>[A-Za-z]{4,})\\s*(?P<interfaces>([0-9]/[0-9]+|[a-z]+[0-9]+|\n?)(,\\s*([0-9]/[0-9]+|[a-z]+[0-9]+))*)"

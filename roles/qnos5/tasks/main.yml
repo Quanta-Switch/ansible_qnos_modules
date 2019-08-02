@@ -1,0 +1,45 @@
+---
+- name: create dir structure
+  file: state=directory path="roles/qnos5/files/{{ inventory_hostname }}"
+
+- name: LY8 Base Setup
+  template: src=base_config.j2 dest="roles/qnos5/files/{{ inventory_hostname }}/01-base.txt"
+
+- name: set vlan
+  template: src=create_vlan.j2 dest="roles/qnos5/files/{{ inventory_hostname }}/02-vlan.txt"
+  with_dict: "{{ VLAN }}"
+
+- debug: msg={{ INTERFACE_ACCESS }}
+
+- name: set access ports
+  template: src=create_interface_access.j2 dest="roles/qnos5/files/{{ inventory_hostname }}/03-int_vlan{{ item.key }}.txt"
+  with_dict: "{{ INTERFACE_ACCESS }}"
+
+- name: create dir structure
+  file: state=directory path="roles/qnos5/confs/"
+
+- assemble: src="roles/qnos5/files/{{ inventory_hostname }}" dest="roles/qnos5/confs/{{ inventory_hostname }}.conf"
+
+#- name: clean temp files
+#  file: path="roles/qnos5/files/{{ inventory_hostname }}/" state=absent
+
+#- name: SYS | Define provider
+#  set_fact:
+#    provider:
+#      host: "{{ ansible_host }}"
+#      username: "admin"
+#      password: "123456"
+
+- name: QNOS5  set clibanner
+  qnos_config:
+    #src: "roles/qnos5/confs/Quanta_BGP_LY8.conf"
+    #src: "roles/qnos5/confs/Quanta_BGP_LY8.conf"
+    src: "roles/qnos5/confs/{{ inventory_hostname }}.conf"
+    backup: yes
+    #backup_options: no
+    backup_options:
+      filename: backup.cfg
+      dir_path: "{{ role_path }}/backup_test_dir/{{ inventory_hostname }}"
+    match: none
+  check_mode: no
+  register: result

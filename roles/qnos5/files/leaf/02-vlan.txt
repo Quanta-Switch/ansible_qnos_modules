@@ -1,0 +1,6 @@
+vlan database
+  vlan 2
+  vlan name 2 Test2
+  vlan 7
+  vlan name 7 Test7
+exit

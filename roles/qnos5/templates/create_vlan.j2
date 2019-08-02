@@ -1,0 +1,6 @@
+vlan database
+{% for (key, value) in VLAN.iteritems() %}
+  vlan {{ key }}
+  vlan name {{ key }} {{ value.NAME }}
+{% endfor %}
+exit

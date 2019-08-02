@@ -1,0 +1,8 @@
+- hosts: leaf
+  roles:
+#  - prepare_qnos_tests
+  - qnos_config
+  - qnos_command
+  - qnos_facts
+  - qnos_reboot
+  - qnos_system

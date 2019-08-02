@@ -1,0 +1,13 @@
+
+interface 0/22
+  description Unused_Port
+  switchport access vlan 2
+  shutdown
+  exit
+interface 0/23
+  description Unused_Port
+  switchport access vlan 2
+  shutdown
+  exit
+
+

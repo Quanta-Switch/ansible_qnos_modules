@@ -1,0 +1,22 @@
+---
+#Vlan
+VLAN:
+  2:
+    DELETE: False
+    NAME: Test2
+    SHUTDOWN: True
+  7:
+    DELETE: False
+    NAME: Test7
+    SHUTDOWN: False
+
+#Access Ports
+INTERFACE_ACCESS:
+  Unused_Port:
+    DESC: Unused_Port
+    SHUTDOWN: True
+    VLAN: 2
+    PORT:
+      - 0/22
+      - 0/23
+

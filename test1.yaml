@@ -1,0 +1,8 @@
+- hosts: leaf
+  gather_facts: no
+  environment:
+    NETWORK_GROUP_MODULES: ['qnos']
+  tasks:
+    - name: print hostvars
+      debug: msg="{{ lookup('env','NETWORK_GROUP_MODULES') }} is an environment variable"
+      
