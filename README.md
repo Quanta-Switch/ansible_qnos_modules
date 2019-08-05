@@ -87,3 +87,15 @@ Another method is to download a ZIP file of the contents of the respository. To 
 
 ### Moving the downloaded code
 As it is mentioned in the previous section [Correctly setup the path for custom modules and plugins](#Correctly-setup-the-path-for-custom-modules-and-plugins), please move the downloaded code to the corresponding directories.
+
+# Test Commands
+## Unit tests
+```
+export PYTHONPATH=~/ansible/lib:~/ansible/test:./
+pytest -x -s test/units/modules/network/f5/ --junitxml=shippable/testresults/nosetests.xml
+```
+## Integration tests
+```
+export PYTHONPATH=~/ansible/lib:./
+ansible-playbook qnostest.yml
+```
