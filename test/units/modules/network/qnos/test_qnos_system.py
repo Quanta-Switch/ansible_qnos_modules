@@ -21,8 +21,12 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 from units.compat.mock import patch, MagicMock
-from ansible.modules.network.qnos import qnos_system
-from ansible.plugins.cliconf.qnos import Cliconf
+try:
+    from library.modules.network.qnos import qnos_system
+    from library.plugins.cliconf.qnos import Cliconf
+except ImportError:
+    from ansible.modules.network.qnos import qnos_system
+    from ansible.plugins.cliconf.qnos import Cliconf
 from units.modules.utils import set_module_args
 from .qnos_module import TestQnosModule, load_fixture
 

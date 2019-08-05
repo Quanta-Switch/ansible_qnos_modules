@@ -22,7 +22,10 @@ __metaclass__ = type
 import json
 
 from units.compat.mock import patch
-from ansible.modules.network.qnos import qnos_command
+try:
+    from library.modules.network.qnos import qnos_command
+except ImportError:
+    from ansible.modules.network.qnos import qnos_command
 from units.modules.utils import set_module_args
 from .qnos_module import TestQnosModule, load_fixture
 
