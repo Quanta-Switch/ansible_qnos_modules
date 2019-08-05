@@ -23,8 +23,10 @@ __metaclass__ = type
 from units.compat.mock import patch, MagicMock
 try:
     from library.modules.network.qnos import qnos_reboot
+    local_dir = True
 except ImportError:
     from ansible.modules.network.qnos import qnos_reboot
+    local_dir = False
 from units.modules.utils import set_module_args
 from .qnos_module import TestQnosModule, load_fixture
 
@@ -34,7 +36,10 @@ class TestQnosRebootModule(TestQnosModule):
 
     def setUp(self):
         super(TestQnosRebootModule, self).setUp()
-        self.mock_run_reload = patch('ansible.modules.network.qnos.qnos_reboot.run_reload')
+        if local_dir:
+            self.mock_run_reload = patch('library.modules.network.qnos.qnos_reboot.run_reload')
+        else:
+            self.mock_run_reload = patch('ansible.modules.network.qnos.qnos_reboot.run_reload')
         self.run_reload = self.mock_run_reload.start()
 
     def tearDown(self):

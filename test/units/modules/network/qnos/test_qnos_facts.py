@@ -21,9 +21,11 @@ from units.compat.mock import patch, MagicMock
 try:
     from library.modules.network.qnos import qnos_facts
     from library.plugins.cliconf.qnos import Cliconf
+    local_dir = True
 except ImportError:
     from ansible.modules.network.qnos import qnos_facts
     from ansible.plugins.cliconf.qnos import Cliconf
+    local_dir = False
 from ansible.module_utils.six import assertCountEqual
 from units.modules.utils import set_module_args
 from .qnos_module import TestQnosModule, load_fixture
@@ -34,7 +36,10 @@ class TestQnosFactsModule(TestQnosModule):
 
     def setUp(self):
         super(TestQnosFactsModule, self).setUp()
-        self.mock_run_commands = patch('ansible.modules.network.qnos.qnos_facts.run_commands')
+        if local_dir:
+            self.mock_run_commands = patch('library.modules.network.qnos.qnos_facts.run_commands')
+        else:
+            self.mock_run_commands = patch('ansible.modules.network.qnos.qnos_facts.run_commands')
         self.run_commands = self.mock_run_commands.start()
 
         self.cliconf_obj = Cliconf(MagicMock())

@@ -24,8 +24,10 @@ import json
 from units.compat.mock import patch
 try:
     from library.modules.network.qnos import qnos_command
+    local_dir = True
 except ImportError:
     from ansible.modules.network.qnos import qnos_command
+    local_dir = False
 from units.modules.utils import set_module_args
 from .qnos_module import TestQnosModule, load_fixture
 
@@ -36,8 +38,10 @@ class TestQnosCommandModule(TestQnosModule):
 
     def setUp(self):
         super(TestQnosCommandModule, self).setUp()
-
-        self.mock_run_commands = patch('ansible.modules.network.qnos.qnos_command.run_commands')
+        if local_dir:
+            self.mock_run_commands = patch('library.modules.network.qnos.qnos_command.run_commands')
+        else: 
+            self.mock_run_commands = patch('ansible.modules.network.qnos.qnos_command.run_commands')
         self.run_commands = self.mock_run_commands.start()
 
     def tearDown(self):

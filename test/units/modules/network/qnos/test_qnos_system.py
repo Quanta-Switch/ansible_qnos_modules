@@ -24,9 +24,11 @@ from units.compat.mock import patch, MagicMock
 try:
     from library.modules.network.qnos import qnos_system
     from library.plugins.cliconf.qnos import Cliconf
+    local_dir = True
 except ImportError:
     from ansible.modules.network.qnos import qnos_system
     from ansible.plugins.cliconf.qnos import Cliconf
+    local_dir = False
 from units.modules.utils import set_module_args
 from .qnos_module import TestQnosModule, load_fixture
 
@@ -38,10 +40,15 @@ class TestQnosSystemModule(TestQnosModule):
     def setUp(self):
         super(TestQnosSystemModule, self).setUp()
 
-        self.mock_get_config = patch('ansible.modules.network.qnos.qnos_system.get_config')
+        if local_dir:
+            self.mock_get_config = patch('library.modules.network.qnos.qnos_system.get_config')
+            self.mock_load_config = patch('library.modules.network.qnos.qnos_system.load_config')
+        else:
+            self.mock_get_config = patch('ansible.modules.network.qnos.qnos_system.get_config')
+            self.mock_load_config = patch('ansible.modules.network.qnos.qnos_system.load_config')
+
         self.get_config = self.mock_get_config.start()
 
-        self.mock_load_config = patch('ansible.modules.network.qnos.qnos_system.load_config')
         self.load_config = self.mock_load_config.start()
 
         self.cliconf_obj = Cliconf(MagicMock())

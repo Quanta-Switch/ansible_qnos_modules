@@ -21,8 +21,14 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 from units.compat.mock import patch, MagicMock
-from ansible.modules.network.qnos import qnos_config
-from ansible.plugins.cliconf.qnos import Cliconf
+try:
+    from library.modules.network.qnos import qnos_config
+    from library.plugins.cliconf.qnos import Cliconf
+    local_dir = True
+except ImportError:
+    from ansible.modules.network.qnos import qnos_config
+    from ansible.plugins.cliconf.qnos import Cliconf
+    local_dir = False
 from units.modules.utils import set_module_args
 from .qnos_module import TestQnosModule, load_fixture
 from ansible.module_utils.network.common.config import dumps
@@ -34,17 +40,20 @@ class TestQnosConfigModule(TestQnosModule):
 
     def setUp(self):
         super(TestQnosConfigModule, self).setUp()
+        if local_dir:
+            self.mock_get_config = patch('library.modules.network.qnos.qnos_config.get_config')
+            self.mock_get_connection = patch('library.modules.network.qnos.qnos_config.get_connection')
+            self.mock_run_commands = patch('library.modules.network.qnos.qnos_config.run_commands')
+        else:
+            self.mock_get_config = patch('ansible.modules.network.qnos.qnos_config.get_config')
+            self.mock_get_connection = patch('ansible.modules.network.qnos.qnos_config.get_connection')
+            self.mock_run_commands = patch('ansible.modules.network.qnos.qnos_config.run_commands')
 
-        self.mock_get_config = patch('ansible.modules.network.qnos.qnos_config.get_config')
+
         self.get_config = self.mock_get_config.start()
-
-        self.mock_get_connection = patch('ansible.modules.network.qnos.qnos_config.get_connection')
         self.get_connection = self.mock_get_connection.start()
-
         self.conn = self.get_connection()
         self.conn.edit_config = MagicMock()
-
-        self.mock_run_commands = patch('ansible.modules.network.qnos.qnos_config.run_commands')
         self.run_commands = self.mock_run_commands.start()
 
         self.cliconf_obj = Cliconf(MagicMock())

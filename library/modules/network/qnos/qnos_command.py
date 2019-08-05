@@ -146,8 +146,10 @@ from ansible.module_utils._text import to_text
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.network.common.parsing import Conditional
 from ansible.module_utils.network.common.utils import transform_commands, to_lines
-from ansible.module_utils.network.qnos.qnos import run_commands
-
+try:
+    from library.module_utils.network.qnos.qnos import run_commands
+except ImportError:
+    from ansible.module_utils.network.qnos.qnos import run_commands
 
 def parse_commands(module, warnings):
     commands = transform_commands(module)
