@@ -92,7 +92,7 @@ As it is mentioned in the previous section [Correctly setup the path for custom 
 ## Unit tests
 ```
 export PYTHONPATH=~/ansible/lib:~/ansible/test:./
-pytest -x -s test/units/modules/network/f5/ --junitxml=shippable/testresults/nosetests.xml
+pytest -x -s test/units/modules/network/qnos/ --junitxml=shippable/testresults/nosetests.xml
 ```
 ## Integration tests
 ```
