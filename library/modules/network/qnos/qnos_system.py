@@ -117,7 +117,10 @@ commands:
 import re
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.network.qnos.qnos import get_config, load_config
+try:
+    from library.module_utils.network.qnos.qnos import get_config, load_config
+except ImportError:
+    from ansible.module_utils.network.qnos.qnos import get_config, load_config
 from ansible.module_utils.network.common.utils import ComplexList
 
 

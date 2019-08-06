@@ -309,10 +309,16 @@ import json
 
 from ansible.module_utils._text import to_text
 from ansible.module_utils.connection import ConnectionError
-from ansible.module_utils.network.qnos.qnos import get_sublevel_config, QnosNetworkConfig
-from ansible.module_utils.network.qnos.qnos import load_config
-from ansible.module_utils.network.qnos.qnos import run_commands, get_config
-from ansible.module_utils.network.qnos.qnos import get_defaults_flag, get_connection
+try:
+    from library.module_utils.network.qnos.qnos import get_sublevel_config, QnosNetworkConfig
+    from library.module_utils.network.qnos.qnos import load_config
+    from library.module_utils.network.qnos.qnos import run_commands, get_config
+    from library.module_utils.network.qnos.qnos import get_defaults_flag, get_connection
+except ImportError:
+    from ansible.module_utils.network.qnos.qnos import get_sublevel_config, QnosNetworkConfig
+    from ansible.module_utils.network.qnos.qnos import load_config
+    from ansible.module_utils.network.qnos.qnos import run_commands, get_config
+    from ansible.module_utils.network.qnos.qnos import get_defaults_flag, get_connection
 # from ansible.module_utils.network.qnos.qnos import qnos_argument_spec
 # from ansible.module_utils.network.qnos.qnos import check_args as qnos_check_args
 from ansible.module_utils.basic import AnsibleModule

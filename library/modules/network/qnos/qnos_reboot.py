@@ -61,9 +61,13 @@ rebooted:
 """
 import re
 import time
+try:
+    from library.module_utils.network.qnos.qnos import run_reload
+    from library.module_utils.network.qnos.qnos import send_data
+except ImportError:
+    from ansible.module_utils.network.qnos.qnos import run_reload
+    from ansible.module_utils.network.qnos.qnos import send_data
 
-from ansible.module_utils.network.qnos.qnos import run_reload
-from ansible.module_utils.network.qnos.qnos import send_data
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.network.common.utils import ComplexList
 from ansible.module_utils.network.common.parsing import Conditional

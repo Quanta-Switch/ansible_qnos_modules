@@ -156,7 +156,10 @@ ansible_net_neighbors:
 """
 import re
 
-from ansible.module_utils.network.qnos.qnos import run_commands
+try:
+    from library.module_utils.network.qnos.qnos import run_commands
+except ImportError:
+    from ansible.module_utils.network.qnos.qnos import run_commands
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.six import iteritems
 from ansible.module_utils.six.moves import zip
